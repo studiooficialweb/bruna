@@ -2,167 +2,471 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login - Bruna Oliveira Joias</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Admin Login · Bruna Oliveira Joias</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
+      background: radial-gradient(circle at 10% 20%, #0c0b0a 0%, #020202 100%);
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
+      overflow-x: hidden;
     }
-    .login-container {
-      background: rgba(26,26,26,0.95);
-      backdrop-filter: blur(10px);
-      padding: 48px 40px;
-      border-radius: 16px;
-      border: 1px solid rgba(201,168,76,0.3);
+
+    /* ornamento decorativo sutil */
+    body::before {
+      content: "";
+      position: absolute;
       width: 100%;
-      max-width: 420px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" opacity="0.1"><path fill="none" stroke="%23c9a84c" stroke-width="0.5" d="M400 100 L500 200 L600 150 L650 250 L750 220 L700 350 L800 400 L700 450 L750 580 L650 550 L600 650 L500 600 L400 700 L300 600 L200 650 L150 550 L50 580 L100 450 L0 400 L100 350 L50 250 L150 220 L200 150 L300 200 Z"/><circle cx="400" cy="400" r="60" stroke="%23e8c97a" fill="none" stroke-width="1"/><circle cx="400" cy="400" r="90" stroke="%23c9a84c" fill="none" stroke-width="0.5"/></svg>');
+      background-repeat: repeat;
+      background-size: 180px;
+      opacity: 0.15;
+      pointer-events: none;
     }
-    .logo {
+
+    /* partículas douradas (CSS only) */
+    .glow-particle {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: #e8c97a;
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatGlow 8s infinite ease-in-out;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes floatGlow {
+      0% { opacity: 0; transform: translateY(0) translateX(0) scale(1); }
+      20% { opacity: 0.4; }
+      80% { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(-120px) translateX(40px) scale(0.8); }
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 460px;
+      margin: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .login-card {
+      background: rgba(10, 10, 10, 0.65);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      border: 1px solid rgba(232, 201, 122, 0.25);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(232, 201, 122, 0.1) inset;
+      transition: transform 0.3s ease, border-color 0.2s;
+    }
+
+    .login-card:hover {
+      border-color: rgba(232, 201, 122, 0.5);
+      box-shadow: 0 35px 55px rgba(0, 0, 0, 0.7);
+    }
+
+    /* monograma / logo refinado */
+    .logo-area {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 2rem;
     }
-    .logo-icon {
-      width: 70px;
-      height: 70px;
-      background: linear-gradient(135deg, #A07830, #E8C97A);
+
+    .gem-badge {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(145deg, #1e1b16, #0a0a0a);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 16px;
-      font-size: 32px;
-      font-weight: 700;
-      color: #0A0A0A;
-      font-family: 'Cormorant Garamond', serif;
+      margin: 0 auto 1.2rem;
+      border: 1px solid #c9a84c;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 12px rgba(232, 201, 122, 0.3);
+      transition: all 0.25s;
     }
-    .logo h1 {
-      color: #E8C97A;
-      font-size: 22px;
-      font-weight: 500;
+
+    .gem-badge span {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 3rem;
+      background: linear-gradient(135deg, #f3e7c9, #c9a84c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       letter-spacing: 2px;
     }
-    .logo p {
-      color: #888;
-      font-size: 12px;
-      margin-top: 4px;
+
+    .logo-area h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: 1.9rem;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #f5e7c8, #dbbf7a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.25rem;
     }
-    .input-group {
-      margin-bottom: 24px;
+
+    .logo-area p {
+      color: #a0a0a0;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-top: 6px;
     }
-    .input-group label {
-      display: block;
-      color: #CCCCCC;
-      font-size: 11px;
+
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c9a84c, #e8c97a, #c9a84c, transparent);
+      margin: 1rem auto 1.5rem;
+    }
+
+    /* campos de input elegantes */
+    .input-field {
+      margin-bottom: 1.8rem;
+    }
+
+    .input-field label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #cfcfcf;
+      font-size: 0.7rem;
+      font-weight: 500;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
-    .input-group input {
+
+    .input-field label i {
+      color: #c9a84c;
+      font-size: 0.75rem;
+      width: 18px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper input {
       width: 100%;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 8px;
-      color: white;
-      font-size: 14px;
-      transition: all 0.3s;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid rgba(232, 201, 122, 0.3);
+      border-radius: 60px;
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #f0f0f0;
+      transition: all 0.25s ease;
+      font-family: 'Inter', monospace;
     }
-    .input-group input:focus {
+
+    .input-wrapper input:focus {
       outline: none;
-      border-color: #C9A84C;
-      background: rgba(255,255,255,0.08);
+      border-color: #e8c97a;
+      background: #0f0f0f;
+      box-shadow: 0 0 0 3px rgba(232, 201, 122, 0.2);
     }
-    .btn-login {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #A07830, #E8C97A);
+
+    .toggle-password {
+      position: absolute;
+      right: 18px;
+      background: none;
       border: none;
-      border-radius: 8px;
-      color: #0A0A0A;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      color: #b9a36b;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-size: 0.9rem;
+      transition: color 0.2s;
     }
-    .btn-login:hover {
+
+    .toggle-password:hover {
+      color: #e8c97a;
+    }
+
+    /* botão principal com brilho */
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(105deg, #a67c2e, #e0bc6e);
+      border: none;
+      border-radius: 60px;
+      padding: 14px 0;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 0.5rem;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-gold i {
+      font-size: 0.9rem;
+      transition: transform 0.2s;
+    }
+
+    .btn-gold:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(201,168,76,0.3);
+      background: linear-gradient(105deg, #b88931, #efcd82);
+      box-shadow: 0 12px 25px rgba(232, 201, 122, 0.3);
+      letter-spacing: 3px;
     }
-    .error-msg {
-      background: rgba(220,53,69,0.15);
-      border: 1px solid rgba(220,53,69,0.5);
-      color: #ff6b6b;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      margin-bottom: 20px;
-      text-align: center;
-      display: none;
+
+    .btn-gold:active {
+      transform: translateY(1px);
     }
-    .info {
+
+    /* mensagem de erro refinada */
+    .error-toast {
+      background: rgba(30, 15, 15, 0.9);
+      backdrop-filter: blur(8px);
+      border-left: 3px solid #df4759;
+      border-radius: 60px;
+      padding: 12px 18px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #ffb7b7;
+      font-size: 0.75rem;
+      font-weight: 500;
+      animation: fadeSlide 0.3s ease forwards;
+    }
+
+    .error-toast i {
+      font-size: 1rem;
+      color: #df4759;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* footer discreto */
+    .login-footer {
       text-align: center;
-      margin-top: 24px;
-      font-size: 11px;
-      color: #666;
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      color: #5a5a5a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .login-footer span {
+      background: rgba(232, 201, 122, 0.1);
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-weight: 400;
+    }
+
+    .login-footer i {
+      color: #c9a84c;
+      margin-right: 4px;
+    }
+
+    /* responsivo */
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 2rem 1.5rem;
+      }
+      .gem-badge {
+        width: 65px;
+        height: 65px;
+      }
+      .gem-badge span {
+        font-size: 2.4rem;
+      }
+      .logo-area h1 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-<div class="login-container">
-  <div class="logo">
-    <div class="logo-icon">B</div>
-    <h1>Painel Administrativo</h1>
-    <p>Bruna Oliveira Joias & Semijoias</p>
-  </div>
-  <div id="errorMsg" class="error-msg"></div>
-  <form id="loginForm">
-    <div class="input-group">
-      <label><i class="fas fa-user"></i> Usuário</label>
-      <input type="text" id="username" placeholder="admin" autocomplete="off">
+
+<!-- partículas geradas dinamicamente para atmosfera luxuosa -->
+<script>
+  (function addParticles() {
+    const body = document.body;
+    for (let i = 0; i < 40; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('glow-particle');
+      const size = Math.random() * 3 + 1;
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 12}s`;
+      particle.style.animationDuration = `${6 + Math.random() * 8}s`;
+      body.appendChild(particle);
+    }
+  })();
+</script>
+
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="logo-area">
+      <div class="gem-badge">
+        <span>B</span>
+      </div>
+      <h1>Bruna Oliveira</h1>
+      <p>Joias & Semijoias</p>
+      <div class="divider"></div>
     </div>
-    <div class="input-group">
-      <label><i class="fas fa-lock"></i> Senha</label>
-      <input type="password" id="password" placeholder="••••••">
+
+    <div id="dynamicError" style="min-height: 58px;"></div>
+
+    <form id="loginForm" novalidate>
+      <div class="input-field">
+        <label><i class="fa-regular fa-user"></i> Identificador</label>
+        <div class="input-wrapper">
+          <input type="text" id="username" placeholder="admin" autocomplete="off" spellcheck="false">
+        </div>
+      </div>
+
+      <div class="input-field">
+        <label><i class="fa-regular fa-lock-keyhole"></i> Código de acesso</label>
+        <div class="input-wrapper">
+          <input type="password" id="password" placeholder="••••••••">
+          <button type="button" class="toggle-password" id="togglePwdBtn" aria-label="Mostrar senha">
+            <i class="fa-regular fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-gold">
+        <i class="fa-regular fa-gem"></i> Acessar painel
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <span><i class="fa-regular fa-shield"></i> Área restrita</span>
+      <span><i class="fa-regular fa-clock"></i> Gestão exclusiva</span>
     </div>
-    <button type="submit" class="btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
-  </form>
-  <div class="info">
-    <i class="fas fa-shield-alt"></i> Área restrita - Apenas administradores
   </div>
 </div>
 
 <script>
-  // Credenciais padrão (em produção, isso deve ser backend/banco)
+  // credenciais definidas (ambiente simulado)
   const ADMIN_USER = "admin";
   const ADMIN_PASS = "bruna123";
-  
-  document.getElementById('loginForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value;
-    const errorDiv = document.getElementById('errorMsg');
-    
-    if (username === ADMIN_USER && password === ADMIN_PASS) {
-      // Salva sessão simulada
-      sessionStorage.setItem('admin_logged', 'true');
-      window.location.href = 'dashboard.html';
+
+  // elementos DOM
+  const form = document.getElementById('loginForm');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const errorContainer = document.getElementById('dynamicError');
+  let errorTimeout = null;
+
+  // função para mostrar mensagem de erro com estilo moderno
+  function showError(message) {
+    if (errorTimeout) clearTimeout(errorTimeout);
+    errorContainer.innerHTML = `
+      <div class="error-toast">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    errorTimeout = setTimeout(() => {
+      if (errorContainer.firstChild) {
+        errorContainer.innerHTML = '';
+      }
+    }, 3200);
+  }
+
+  // limpar erro quando usuário digitar
+  function clearErrorOnInput() {
+    if (errorContainer.innerHTML !== '') {
+      errorContainer.innerHTML = '';
+      if (errorTimeout) clearTimeout(errorTimeout);
+    }
+  }
+  usernameInput.addEventListener('input', clearErrorOnInput);
+  passwordInput.addEventListener('input', clearErrorOnInput);
+
+  // alternar visibilidade da senha com ícone elegante
+  const toggleBtn = document.getElementById('togglePwdBtn');
+  toggleBtn.addEventListener('click', () => {
+    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordInput.setAttribute('type', type);
+    const icon = toggleBtn.querySelector('i');
+    if (type === 'text') {
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
     } else {
-      errorDiv.style.display = 'block';
-      errorDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Usuário ou senha incorretos.';
-      setTimeout(() => { errorDiv.style.display = 'none'; }, 3000);
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
     }
   });
+
+  // submissão do formulário
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      // sessão simulada
+      sessionStorage.setItem('admin_logged', 'true');
+      // pequena animação antes do redirecionamento (feedback visual)
+      const btn = document.querySelector('.btn-gold');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Redirecionando...';
+      btn.disabled = true;
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 400);
+    } else {
+      showError('Usuário ou senha incorretos. Verifique suas credenciais.');
+      // shake sutil no card para feedback
+      const card = document.querySelector('.login-card');
+      card.style.transform = 'translateX(4px)';
+      setTimeout(() => { card.style.transform = ''; }, 100);
+      setTimeout(() => { card.style.transform = 'translateX(-3px)'; }, 150);
+      setTimeout(() => { card.style.transform = ''; }, 250);
+    }
+  });
+
+  // pequeno detalhe: foco inicial no campo username
+  setTimeout(() => {
+    usernameInput.focus();
+  }, 100);
 </script>
 </body>
 </html>
