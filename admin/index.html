@@ -37,7 +37,7 @@
       pointer-events: none;
     }
 
-    /* partículas douradas (CSS only) */
+    /* partículas douradas */
     .glow-particle {
       position: fixed;
       width: 2px;
@@ -69,6 +69,7 @@
       background: rgba(10, 10, 10, 0.65);
       backdrop-filter: blur(14px);
       border-radius: 2rem;
+      /* Borda restaurada conforme solicitado */
       border: 1px solid rgba(232, 201, 122, 0.25);
       padding: 2.5rem 2rem;
       box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 0 0.5px rgba(232, 201, 122, 0.1) inset;
@@ -80,63 +81,30 @@
       box-shadow: 0 35px 55px rgba(0, 0, 0, 0.7);
     }
 
-    /* monograma / logo refinado */
+    /* Área da logo: apenas a imagem, sem círculo e sem textos */
     .logo-area {
-      text-align: center;
-      margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.2rem;  /* valor reduzido de 2rem para aproximar a logo dos campos */
+}
+
+/* Opcional: se quiser garantir que o primeiro campo não tenha margem extra no topo */
+.input-field:first-of-type {
+  margin-top: 0;
+}
+
+    .logo-img {
+      max-width: 180px;
+      width: 100%;
+      height: auto;
+      display: inline-block;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      transition: transform 0.2s ease;
     }
 
-    .gem-badge {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(145deg, #1e1b16, #0a0a0a);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.2rem;
-      border: 1px solid #c9a84c;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3), 0 0 12px rgba(232, 201, 122, 0.3);
-      transition: all 0.25s;
-    }
-
-    .gem-badge span {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: 3rem;
-      background: linear-gradient(135deg, #f3e7c9, #c9a84c);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: 2px;
-    }
-
-    .logo-area h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-      font-size: 1.9rem;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #f5e7c8, #dbbf7a);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.25rem;
-    }
-
-    .logo-area p {
-      color: #a0a0a0;
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 300;
-      margin-top: 6px;
-    }
-
-    .divider {
-      width: 50px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #c9a84c, #e8c97a, #c9a84c, transparent);
-      margin: 1rem auto 1.5rem;
+    .logo-img:hover {
+      transform: scale(1.02);
     }
 
     /* campos de input elegantes */
@@ -305,22 +273,54 @@
       .login-card {
         padding: 2rem 1.5rem;
       }
-      .gem-badge {
-        width: 65px;
-        height: 65px;
-      }
-      .gem-badge span {
-        font-size: 2.4rem;
-      }
-      .logo-area h1 {
-        font-size: 1.5rem;
+      .logo-img {
+        max-width: 140px;
       }
     }
+    .logo-img {
+  max-width: 240px;  /* antes era 180px */
+  width: 600%;
+  height: auto;
+  display: inline-block;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+@media (max-width: 480px) {
+  .logo-img {
+    max-width: 180px;  /* antes era 140px, aumentado também */
+  }
+}
+
+.logo-area {
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  margin-bottom: 2rem;
+}
+
+.logo-img {
+  max-width: 240px;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 480px) {
+  .logo-img {
+    max-width: 180px;
+  }
+}
   </style>
 </head>
 <body>
 
-<!-- partículas geradas dinamicamente para atmosfera luxuosa -->
 <script>
   (function addParticles() {
     const body = document.body;
@@ -342,12 +342,8 @@
 <div class="login-wrapper">
   <div class="login-card">
     <div class="logo-area">
-      <div class="gem-badge">
-        <span>B</span>
-      </div>
-      <h1>Bruna Oliveira</h1>
-      <p>Joias & Semijoias</p>
-      <div class="divider"></div>
+      <!-- Somente a logo, sem círculo e sem textos -->
+      <img src="c:\Users\Usuário 3 EMTI\Documents\Romanel\img\logo.png" alt="Logo da loja" class="logo-img">
     </div>
 
     <div id="dynamicError" style="min-height: 58px;"></div>
@@ -383,18 +379,16 @@
 </div>
 
 <script>
-  // credenciais definidas (ambiente simulado)
+  // credenciais definidas
   const ADMIN_USER = "admin";
   const ADMIN_PASS = "bruna123";
 
-  // elementos DOM
   const form = document.getElementById('loginForm');
   const usernameInput = document.getElementById('username');
   const passwordInput = document.getElementById('password');
   const errorContainer = document.getElementById('dynamicError');
   let errorTimeout = null;
 
-  // função para mostrar mensagem de erro com estilo moderno
   function showError(message) {
     if (errorTimeout) clearTimeout(errorTimeout);
     errorContainer.innerHTML = `
@@ -410,7 +404,6 @@
     }, 3200);
   }
 
-  // limpar erro quando usuário digitar
   function clearErrorOnInput() {
     if (errorContainer.innerHTML !== '') {
       errorContainer.innerHTML = '';
@@ -420,7 +413,6 @@
   usernameInput.addEventListener('input', clearErrorOnInput);
   passwordInput.addEventListener('input', clearErrorOnInput);
 
-  // alternar visibilidade da senha com ícone elegante
   const toggleBtn = document.getElementById('togglePwdBtn');
   toggleBtn.addEventListener('click', () => {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -435,18 +427,14 @@
     }
   });
 
-  // submissão do formulário
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const username = usernameInput.value.trim();
     const password = passwordInput.value;
 
     if (username === ADMIN_USER && password === ADMIN_PASS) {
-      // sessão simulada
       sessionStorage.setItem('admin_logged', 'true');
-      // pequena animação antes do redirecionamento (feedback visual)
       const btn = document.querySelector('.btn-gold');
-      const originalText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-regular fa-circle-check"></i> Redirecionando...';
       btn.disabled = true;
       setTimeout(() => {
@@ -454,7 +442,6 @@
       }, 400);
     } else {
       showError('Usuário ou senha incorretos. Verifique suas credenciais.');
-      // shake sutil no card para feedback
       const card = document.querySelector('.login-card');
       card.style.transform = 'translateX(4px)';
       setTimeout(() => { card.style.transform = ''; }, 100);
@@ -463,7 +450,6 @@
     }
   });
 
-  // pequeno detalhe: foco inicial no campo username
   setTimeout(() => {
     usernameInput.focus();
   }, 100);
